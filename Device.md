@@ -717,6 +717,10 @@ and `CLEAR` commands are actions and MUST NOT be set together.
 
 * **CLEAR [Bit 7]:** If this bit is set, the Device MUST clear the saved network configuration and disconnect. When sending a reply to a `Read` request, the Device MUST clear this bit in the message payload.
 
+> [!IMPORTANT]
+>
+> To avoid unexpected behavior, the Controller SHOULD NOT set **APPLY** and **CLEAR** bits at the same time when sending a `Write` request to `R_NET_CONFIG`.
+
 ## Deprecated Core Registers
 
 The following registers are deprecated and their functionality SHOULD NOT be implemented in new devices. They MUST still exist as read-only registers, and included in the [`R_OPERATION_CTRL`](#r_operation_ctrl-u8--operation-mode-configuration) register dump. They are kept for backward compatibility with older Controllers and may be removed in future protocol versions.
