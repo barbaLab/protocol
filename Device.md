@@ -683,8 +683,8 @@ gantt
   STATUS_IP_OK     :id4, after id5, 4
   STATUS_WIFI_UP   :id3, after id4, 5
   STATUS_CFG_VALID :id2, after id3, 6
-  ENABLE_TCP       :id1, after id2, 7
-  ENABLE_WIFI      :id0, after id1, 8
+  TCP_EN           :id1, after id2, 7
+  WIFI_EN          :id0, after id1, 8
 
   section Default
   0      :d7, 0, 1
@@ -701,9 +701,9 @@ This register controls Wi-Fi and TCP operation and reports network status.
 The Device MUST ignore status bits supplied by the Controller. The `APPLY`
 and `CLEAR` commands are actions and MUST NOT be set together.
 
-* **ENABLE_WIFI [Bit 0]:** If this bit is set, the Device MUST enable Wi-Fi station mode. Otherwise, if the bit is cleared, the Device MUST turn off Wi-Fi capabilities.
+* **WIFI_EN [Bit 0]:** If this bit is set, the Device MUST enable Wi-Fi station mode. Otherwise, if the bit is cleared, the Device MUST turn off Wi-Fi capabilities.
 
-* **ENABLE_TCP [Bit 1]:** If this bit is set, the Device MUST enable the outbound TCP client. Otherwise, if the bit is cleared, the Device MUST disable the outbound TCP client.
+* **TCP_EN [Bit 1]:** If this bit is set, the Device MUST enable the outbound TCP client. Otherwise, if the bit is cleared, the Device MUST disable the outbound TCP client.
 
 * **STATUS_CFG_VALID [Bit 2]:** Read-only status bit. When sending a reply to a `Read` request, the Device MUST set this bit if the network configuration is valid.
 
