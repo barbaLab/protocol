@@ -180,8 +180,8 @@ The following set of Device core registers MUST be implemented. These reserved r
 |[`R_HEARTBEAT`](#r_heartbeat-u16--device-status-information)|Yes|Yes|U16|018|b)|Device Status Information|Required|
 |[`R_VERSION`](#r_version-u8-array--device-version-information)|-|Yes|U8 Array|019|a)|Device Version Information|Required|
 |[`R_NET_SSID`](#r_net_ssid-u8-array--wi-fi-ssid)|No|No|U8 Array|020|b)|Wi-Fi SSID|Optional|
-|[`R_NET_PASSWORD`](#r_net_password-u8-array--wi-fi-password)|No|No|U8 Array|021|b)|Wi-Fi password; reads return zeroes|Optional|
-|[`R_NET_ENDPOINT`](#r_net_endpoint-u8-array--tcp-endpoint)|No|No|U8 Array|022|b)|IP Address and TCP Port|Optional|
+|[`R_NET_PASSWORD`](#r_net_password-u8-array--wi-fi-password)|No|No|U8 Array|021|b)|Wi-Fi password|Optional|
+|[`R_NET_ENDPOINT`](#r_net_endpoint-u8-array--tcp-endpoint)|No|No|U8 Array|022|b)|Controller IP Address and TCP Port|Optional|
 |[`R_NET_CONFIG`](#r_net_config-u8--network-configuration)|No|No|U8|023|b)|Wi-Fi/TCP Configuration|Optional|
 
 ||a) These values MUST be stored during the firmware build process and are persistent, i.e. they SHALL NOT be changeable by the Controller.<br>b) Check notes on the specific register specification. |
@@ -617,7 +617,7 @@ The bytes in this register specify the [semantic version](https://semver.org/) o
 
 ## Network Core Registers
 
-> [!INFO]
+> [!NOTE]
 >
 > The following optional registers are reserved for the Wi-Fi and outbound TCP network module. Some devices have wifi capabilities and can act as a TCP client connecting to the configured host endpoint; they do not listen for incoming TCP connections.
 
@@ -647,9 +647,9 @@ Address: `022`<br>
 Length: 18
 
 The first 16 bytes contain an IPv6 address, or an IPv4 address encoded as an
-IPv4-mapped IPv6 address. The final two bytes contain the TCP port as an
-unsigned little-endian value. For example, IPv4 address `192.0.2.10` is
-encoded as `::ffff:192.0.2.10`. The register is non-volatile.
+IPv4-mapped IPv6 address. For example, IPv4 address `192.0.2.10` is
+encoded as `::ffff:192.0.2.10`. The final two bytes contain the TCP port as an
+unsigned little-endian value. The register is non-volatile.
 
 ### **`R_NET_CONFIG` (U8) - Network Configuration**
 
@@ -701,9 +701,9 @@ This register controls Wi-Fi and TCP operation and reports network status.
 The Device MUST ignore status bits supplied by the Controller. The `APPLY`
 and `CLEAR` commands are actions and MUST NOT be set together.
 
-* **ENABLE_WIFI [Bit 0]:** If this bit is set, the Device MUST enable Wi-Fi station mode.
+* **ENABLE_WIFI [Bit 0]:** If this bit is set, the Device MUST enable Wi-Fi station mode. Otherwise, if the bit is cleared, the Device MUST turn off Wi-Fi capabilities.
 
-* **ENABLE_TCP [Bit 1]:** If this bit is set, the Device MUST enable the outbound TCP client.
+* **ENABLE_TCP [Bit 1]:** If this bit is set, the Device MUST enable the outbound TCP client. Otherwise, if the bit is cleared, the Device MUST disable the outbound TCP client.
 
 * **STATUS_CFG_VALID [Bit 2]:** Read-only status bit. When sending a reply to a `Read` request, the Device MUST set this bit if the network configuration is valid.
 
@@ -713,12 +713,9 @@ and `CLEAR` commands are actions and MUST NOT be set together.
 
 * **STATUS_TCP_CONN [Bit 5]:** Read-only status bit. When sending a reply to a `Read` request, the Device MUST set this bit if TCP is connected to the configured endpoint.
 
-* **APPLY [Bit 6]:** If this bit is set, the Device MUST apply and save the current network configuration.
+* **APPLY [Bit 6]:** If this bit is set, the Device MUST apply and save the current network configuration. When sending a reply to a `Read` request, the Device MUST clear this bit in the message payload.
 
-* **CLEAR [Bit 7]:** If this bit is set, the Device MUST clear the saved network configuration and disconnect.
-
-Common controller writes are `0x41` to enable Wi-Fi and apply, `0x43` to
-enable Wi-Fi and TCP and apply, and `0x80` to clear the saved configuration.
+* **CLEAR [Bit 7]:** If this bit is set, the Device MUST clear the saved network configuration and disconnect. When sending a reply to a `Read` request, the Device MUST clear this bit in the message payload.
 
 ## Deprecated Core Registers
 
@@ -1081,5 +1078,7 @@ When the value of this register is greater than `0` (Zero), the Device timestamp
   * Adopt requirement key words from RFC 2119
 
 - v1.14.0
-  * Reserve addresses 20 through 23 for the network extension
-  * Add `R_NET_SSID`, `R_NET_PASSWORD`, `R_NET_ENDPOINT`, and `R_NET_CONFIG` registers
+  * Add `R_NET_SSID` register
+  * Add `R_NET_PASSWORD` register
+  * Add `R_NET_ENDPOINT` register
+  * Add `R_NET_CONFIG` register
