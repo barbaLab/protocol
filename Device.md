@@ -619,7 +619,7 @@ The bytes in this register specify the [semantic version](https://semver.org/) o
 
 > [!NOTE]
 >
-> The following optional registers are reserved for the Wi-Fi and outbound TCP network module. Some devices have wifi capabilities and can act as a TCP client connecting to the configured host endpoint; they do not listen for incoming TCP connections.
+> The following optional registers are reserved for the Wi-Fi and outbound TCP network module. Some devices have Wi-Fi capabilities and can act as a TCP client connecting to the configured Controller endpoint. They do not listen to incoming TCP connections.
 
 ### **`R_NET_SSID` (U8 Array) - Wi-Fi SSID**
 
@@ -638,7 +638,7 @@ Length: 64
 
 This register stores the Wi-Fi station password as a NUL-terminated,
 zero-padded byte array. The maximum usable password length is 63 bytes. The
-register is non-volatile. For security, the Device MUST return zeroes when
+register is non-volatile. For security reasons, the Device MUST return zeroes when
 this register is read.
 
 ### **`R_NET_ENDPOINT` (U8 Array) - TCP Endpoint**
