@@ -191,13 +191,13 @@ groupMasks:
     description: Specifies the current network status.
     values:
       Connected: {value: 0, description: The network is connected.}
-      Reserved: {value: 1, description: Reserved for future use.}
-      TcpHostUnreachable: {value: 2, description: The TCP host could not be reached.}
-      IpUnavailable: {value: 3, description: A valid IP address could not be received.}
-      WiFiNetworkUnavailable: {value: 4, description: The device could not connect to the Wi-Fi network.}
-      WiFiUnavailable: {value: 5, description: Wi-Fi could not be enabled on the device.}
-      InvalidConfiguration: {value: 6, description: The network configuration is invalid or malformed.}
-      UnknownError: {value: 7, description: An unknown network error occurred.}
+      Reserved: {value: 0x08, description: Reserved for future use.}
+      TcpHostUnreachable: {value: 0x10, description: The TCP host could not be reached.}
+      IpUnavailable: {value: 0x18, description: A valid IP address could not be received.}
+      WiFiNetworkUnavailable: {value: 0x20, description: The device could not connect to the Wi-Fi network.}
+      WiFiUnavailable: {value: 0x28, description: Wi-Fi could not be enabled on the device.}
+      InvalidConfiguration: {value: 0x30, description: The network configuration is invalid or malformed.}
+      UnknownError: {value: 0x38, description: An unknown network error occurred.}
 bitMasks:
   ResetFlags:
     description: Specifies the behavior of the non-volatile registers when resetting the device.
