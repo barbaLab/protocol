@@ -157,22 +157,14 @@ registers:
         description: Specifies whether TCP is enabled.
         maskType: EnableFlag
         mask: 0x2
-      ConfigurationValid:
-        description: Specifies whether the network configuration is valid.
+      WiFiCapability:
+        description: Specifies whether the device has Wi-Fi capabilities.
         interfaceType: bool
         mask: 0x4
-      WiFiStatus:
-        description: Specifies whether the WiFi connection is OK.
-        interfaceType: bool
-        mask: 0x8
-      WiFiConnected:
-        description: Specifies whether the IP address is OK.
-        interfaceType: bool
-        mask: 0x10
-      TcpConnected:
-        description: Specifies whether TCP is connected.
-        interfaceType: bool
-        mask: 0x20
+      NetworkStatus:
+        description: Specifies the current network status.
+        maskType: NetworkStatus
+        mask: 0x38
       Operation:
         description: Specifies whether to apply or clear the network configuration.
         maskType: NetworkConfigurationOperationFlags
@@ -195,6 +187,17 @@ groupMasks:
       None: {value: 0, description: No operation is performed on the network configuration.}
       Apply: {value: 0x40, description: The device will apply the current network configuration.}
       Clear: {value: 0x80, description: The device will clear the current network configuration.}
+  NetworkStatus:
+    description: Specifies the current network status.
+    values:
+      Connected: {value: 0, description: The network is connected.}
+      Reserved: {value: 0x08, description: Reserved for future use.}
+      TcpHostUnreachable: {value: 0x10, description: The TCP host could not be reached.}
+      IpUnavailable: {value: 0x18, description: A valid IP address could not be received.}
+      WiFiNetworkUnavailable: {value: 0x20, description: The device could not connect to the Wi-Fi network.}
+      WiFiUnavailable: {value: 0x28, description: Wi-Fi could not be enabled on the device.}
+      InvalidConfiguration: {value: 0x30, description: The network configuration is invalid or malformed.}
+      UnknownError: {value: 0x38, description: An unknown network error occurred.}
 bitMasks:
   ResetFlags:
     description: Specifies the behavior of the non-volatile registers when resetting the device.
