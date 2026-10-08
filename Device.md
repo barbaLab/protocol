@@ -682,7 +682,7 @@ gantt
   STATUS_TCP_CONN  :id5, after id6, 3
   STATUS_IP_OK     :id4, after id5, 4
   STATUS_WIFI_UP   :id3, after id4, 5
-  STATUS_CFG_VALID :id2, after id3, 6
+  WIFI_ABLE        :id2, after id3, 6
   TCP_EN           :id1, after id2, 7
   WIFI_EN          :id0, after id1, 8
 
@@ -692,7 +692,7 @@ gantt
   0      :d5, after d6, 3
   0      :d4, after d5, 4
   0      :d3, after d4, 5
-  0      :d2, after d3, 6
+  -      :d2, after d3, 6
   0      :d1, after d2, 7
   0      :d0, after d1, 8
 ```
@@ -705,7 +705,7 @@ and `CLEAR` commands are actions and MUST NOT be set together.
 
 * **TCP_EN [Bit 1]:** If this bit is set, the Device MUST enable the outbound TCP client. Otherwise, if the bit is cleared, the Device MUST disable the outbound TCP client.
 
-* **STATUS_CFG_VALID [Bit 2]:** Read-only status bit. When sending a reply to a `Read` request, the Device MUST set this bit if the network configuration is valid.
+* **WIFI_ABLE [Bit 2]:** Read-only status bit. When sending a reply to a `Read` request, the Device MUST set this bit if the Device has Wi-Fi capabilities. If this bit is cleared, the Device MUST report `NET_STATUS` as `0`.
 
 * **STATUS_WIFI_UP [Bit 3]:** Read-only status bit. When sending a reply to a `Read` request, the Device MUST set this bit if the Wi-Fi link is up.
 

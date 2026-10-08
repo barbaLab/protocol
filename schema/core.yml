@@ -157,8 +157,8 @@ registers:
         description: Specifies whether TCP is enabled.
         maskType: EnableFlag
         mask: 0x2
-      ConfigurationValid:
-        description: Specifies whether the network configuration is valid.
+      WiFiCapability:
+        description: Specifies whether the device has Wi-Fi capabilities.
         interfaceType: bool
         mask: 0x4
       WiFiStatus:
