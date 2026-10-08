@@ -621,7 +621,7 @@ The bytes in this register specify the [semantic version](https://semver.org/) o
 >
 > The following optional registers are reserved for the Wi-Fi and outbound TCP network module. Some devices have Wi-Fi capabilities and can act as a TCP client connecting to the configured Controller endpoint. They do not listen to incoming TCP connections.
 
-### **`R_NET_SSID` (U8 Array) - Wi-Fi SSID**
+### **`R_NET_SSID` (U8 Array) – Wi-Fi SSID**
 
 Address: `020`<br>
 Length: 32
@@ -631,7 +631,7 @@ byte array. The maximum usable SSID length is 31 bytes. The register is
 non-volatile and is applied when [`R_NET_CONFIG`](#r_net_config-u8--network-configuration)
 is written with the `APPLY` command.
 
-### **`R_NET_PASSWORD` (U8 Array) - Wi-Fi Password**
+### **`R_NET_PASSWORD` (U8 Array) – Wi-Fi Password**
 
 Address: `021`<br>
 Length: 64
@@ -641,7 +641,7 @@ zero-padded byte array. The maximum usable password length is 63 bytes. The
 register is non-volatile. For security reasons, the Device MUST return zeroes when
 this register is read.
 
-### **`R_NET_ENDPOINT` (U8 Array) - TCP Endpoint**
+### **`R_NET_ENDPOINT` (U8 Array) – TCP Endpoint**
 
 Address: `022`<br>
 Length: 18
@@ -651,7 +651,7 @@ IPv4-mapped IPv6 address. For example, IPv4 address `192.0.2.10` is
 encoded as `::ffff:192.0.2.10`. The final two bytes contain the TCP port as an
 unsigned little-endian value. The register is non-volatile.
 
-### **`R_NET_CONFIG` (U8) - Network Configuration**
+### **`R_NET_CONFIG` (U8) – Network Configuration**
 
 Address: `023`<br>
 Length: 1
