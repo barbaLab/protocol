@@ -161,18 +161,10 @@ registers:
         description: Specifies whether the device has Wi-Fi capabilities.
         interfaceType: bool
         mask: 0x4
-      WiFiStatus:
-        description: Specifies whether the WiFi connection is OK.
-        interfaceType: bool
-        mask: 0x8
-      WiFiConnected:
-        description: Specifies whether the IP address is OK.
-        interfaceType: bool
-        mask: 0x10
-      TcpConnected:
-        description: Specifies whether TCP is connected.
-        interfaceType: bool
-        mask: 0x20
+      NetworkStatus:
+        description: Specifies the current network status.
+        maskType: NetworkStatus
+        mask: 0x38
       Operation:
         description: Specifies whether to apply or clear the network configuration.
         maskType: NetworkConfigurationOperationFlags
@@ -195,6 +187,17 @@ groupMasks:
       None: {value: 0, description: No operation is performed on the network configuration.}
       Apply: {value: 0x40, description: The device will apply the current network configuration.}
       Clear: {value: 0x80, description: The device will clear the current network configuration.}
+  NetworkStatus:
+    description: Specifies the current network status.
+    values:
+      Connected: {value: 0, description: The network is connected.}
+      Reserved: {value: 1, description: Reserved for future use.}
+      TcpHostUnreachable: {value: 2, description: The TCP host could not be reached.}
+      IpUnavailable: {value: 3, description: A valid IP address could not be received.}
+      WiFiNetworkUnavailable: {value: 4, description: The device could not connect to the Wi-Fi network.}
+      WiFiUnavailable: {value: 5, description: Wi-Fi could not be enabled on the device.}
+      InvalidConfiguration: {value: 6, description: The network configuration is invalid or malformed.}
+      UnknownError: {value: 7, description: An unknown network error occurred.}
 bitMasks:
   ResetFlags:
     description: Specifies the behavior of the non-volatile registers when resetting the device.

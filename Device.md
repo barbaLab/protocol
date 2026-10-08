@@ -669,30 +669,24 @@ gantt
   section Bit
   7      :bit7, 0, 1
   6      :bit6, after bit7, 2
-  5      :bit5, after bit6, 3
-  4      :bit4, after bit5, 4
-  3      :bit3, after bit4, 5
-  2      :bit2, after bit3, 6
+  5-3    :bits5_3, after bit6, 5
+  2      :bit2, after bits5_3, 6
   1      :bit1, after bit2, 7
   0      :bit0, after bit1, 8
 
   section Id
   CLEAR            :id7, 0, 1
   APPLY            :id6, after id7, 2
-  STATUS_TCP_CONN  :id5, after id6, 3
-  STATUS_IP_OK     :id4, after id5, 4
-  STATUS_WIFI_UP   :id3, after id4, 5
-  WIFI_ABLE        :id2, after id3, 6
+  NET_STATUS       :id5, after id6, 5
+  WIFI_ABLE        :id2, after id5, 6
   TCP_EN           :id1, after id2, 7
   WIFI_EN          :id0, after id1, 8
 
   section Default
   0      :d7, 0, 1
   0      :d6, after d7, 2
-  0      :d5, after d6, 3
-  0      :d4, after d5, 4
-  0      :d3, after d4, 5
-  -      :d2, after d3, 6
+  -      :d5_3, after d6, 5
+  -      :d2, after d5_3, 6
   0      :d1, after d2, 7
   0      :d0, after d1, 8
 ```
@@ -707,11 +701,20 @@ and `CLEAR` commands are actions and MUST NOT be set together.
 
 * **WIFI_ABLE [Bit 2]:** Read-only status bit. When sending a reply to a `Read` request, the Device MUST set this bit if the Device has Wi-Fi capabilities. If this bit is cleared, the Device MUST report `NET_STATUS` as `0`.
 
-* **STATUS_WIFI_UP [Bit 3]:** Read-only status bit. When sending a reply to a `Read` request, the Device MUST set this bit if the Wi-Fi link is up.
+* **NET_STATUS [Bits 5:3]:** Read-only status group reporting the current network status. If `WIFI_EN` or `WIFI_ABLE` is cleared, the Device MUST report `Connected` (`0`).
 
-* **STATUS_IP_OK [Bit 4]:** Read-only status bit. When sending a reply to a `Read` request, the Device MUST set this bit if the station has acquired an IP address.
+**Table - Available NET_STATUS values**
 
-* **STATUS_TCP_CONN [Bit 5]:** Read-only status bit. When sending a reply to a `Read` request, the Device MUST set this bit if TCP is connected to the configured endpoint.
+| NET_STATUS[5:3] | Configuration                         |
+|-----------------|---------------------------------------|
+| 0               | Connected                             |
+| 1               | - _(reserved for future use)_         |
+| 2               | Could not reach TCP host              |
+| 3               | Could not receive a valid IP          |
+| 4               | Could not connect to Wi-Fi network    |
+| 5               | Could not enable Wi-Fi on the Device  |
+| 6               | Invalid or malformed configuration    |
+| 7               | Unknown error                         |
 
 * **APPLY [Bit 6]:** If this bit is set, the Device MUST apply and save the current network configuration. When sending a reply to a `Read` request, the Device MUST clear this bit in the message payload.
 
